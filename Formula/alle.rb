@@ -9,15 +9,15 @@
 #
 # Product boundary: this channel is deliberately headless. It installs the CLI,
 # background daemon, loopback control API, and the version-locked bundled Web UI
-# — never `rumps`, an `alle-tray` launcher, `alle.tray`, or `alle.companion`.
-# The base wheel enforces that boundary for every native distribution channel.
+# — no GUI surface of any kind. The base wheel enforces that boundary for every
+# native distribution channel.
 class Alle < Formula
   include Language::Python::Virtualenv
 
   desc "Universal VPN client with rule-based routing (headless CLI + Web UI)"
   homepage "https://github.com/zydo/alle"
-  url "https://files.pythonhosted.org/packages/7c/71/08b3dc64755c9bd3c4164eed5abdc8597721674a1f3c6aca54edeb76aa79/alle_proxy-0.1.14.tar.gz"
-  sha256 "616943beabcb5f26f1838e37e2f88cb0d7d6f740f6662c84aecb13c98fc7fb90"
+  url "https://files.pythonhosted.org/packages/15/a5/c3a40892b569c283ad04c2f3c03b593a66207d15dcfba466ab8e6dc32738/alle_proxy-0.1.15.tar.gz"
+  sha256 "4b79bb7ca5ea6d74cb06752af7e2d388b9b0ae38b14ff3abc76cebcd82546c74"
   license "MIT"
 
   depends_on "libyaml"
@@ -28,8 +28,8 @@ class Alle < Formula
   # locked versions change (`packaging` is otherwise treated as bootstrap
   # tooling and omitted).
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/d7/f1/e7a6dd94a8d4a5626c03e4e99c87f241ba9e350cd9e6d75123f992427270/packaging-26.2.tar.gz"
-    sha256 "ff452ff5a3e828ce110190feff1178bb1f2ea2281fa2075aadb987c2fb221661"
+    url "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz"
+    sha256 "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
   end
 
   resource "pycountry" do
@@ -64,7 +64,7 @@ class Alle < Formula
   def caveats
     <<~EOS
       This is the headless alle channel: CLI, background daemon, loopback
-      control API, and the bundled Web UI — no menu-bar app or tray.
+      control API, and the bundled Web UI.
 
       Manage the background daemon with brew services rather than
       `alle daemon install` (which would register a competing launchd/systemd
@@ -84,11 +84,5 @@ class Alle < Formula
 
     # The bundled Web UI is present and version-locked to the CLI package.
     assert_path_exists "#{site}/assets/index.html"
-
-    # Product boundary: no GUI/tray/companion surface ships in this channel.
-    refute_path_exists "#{site}/tray.py"
-    refute_path_exists "#{site}/companion.py"
-    refute_path_exists bin/"alle-tray"
-    refute_path_exists libexec/"bin/alle-tray"
   end
 end
