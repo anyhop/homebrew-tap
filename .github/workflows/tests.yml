@@ -16,8 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 # Build every formula in the tap from source on clean macOS and Linux runners,
-# run its `test do` block (for alle: smokes `alle version`, the bundled Web UI
-# assets, and the absence of every GUI/tray surface), and hold the tap to
+# run its `test do` block (for anyhop: smokes `anyhop version`, the bundled
+# Web UI assets, and the absence of every GUI surface), and hold the tap to
 # `brew audit --strict`.
 jobs:
   test:
@@ -78,7 +78,7 @@ jobs:
 
       - name: Expose this checkout as the tap
         run: |
-          tap_dir="$(brew --repository)/Library/Taps/zydo/homebrew-tap"
+          tap_dir="$(brew --repository)/Library/Taps/anyhop/homebrew-tap"
           mkdir -p "$(dirname "$tap_dir")"
           ln -s "$GITHUB_WORKSPACE" "$tap_dir"
 
@@ -86,24 +86,27 @@ jobs:
         run: |
           for formula in Formula/*.rb; do
             name="$(basename "$formula" .rb)"
-            brew install --build-from-source --verbose "zydo/tap/$name"
+            brew install --build-from-source --verbose "anyhop/tap/$name"
           done
 
-      - name: CLI startup smoke (alle)
+      - name: CLI startup smoke
         run: |
-          "$(brew --prefix)/bin/alle" version
-          "$(brew --prefix)/bin/alle" --help >/dev/null
+          for formula in Formula/*.rb; do
+            name="$(basename "$formula" .rb)"
+            "$(brew --prefix)/bin/$name" version
+            "$(brew --prefix)/bin/$name" --help >/dev/null
+          done
 
       - name: Run every formula's test block
         run: |
           for formula in Formula/*.rb; do
             name="$(basename "$formula" .rb)"
-            brew test "zydo/tap/$name"
+            brew test "anyhop/tap/$name"
           done
 
       - name: Audit
         run: |
           for formula in Formula/*.rb; do
             name="$(basename "$formula" .rb)"
-            brew audit --strict "zydo/tap/$name"
+            brew audit --strict "anyhop/tap/$name"
           done
