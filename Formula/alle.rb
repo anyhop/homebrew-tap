@@ -1,5 +1,10 @@
 # Homebrew formula for the headless `alle` channel (macOS + Linux).
 #
+# NOTE: the project moved to https://github.com/anyhop/anyhop and is being
+# renamed to `anyhop` (PyPI `anyhop`). Until anyhop 0.1.18 ships this formula
+# still installs `alle-proxy` 0.1.17 and the `alle` command; the release
+# workflow will replace it with Formula/anyhop.rb.
+#
 # This is the canonical source of the formula. The `homebrew-tap` tap ships a
 # copy of it; the release workflow updates the tap's copy only after the
 # matching `alle-proxy` release exists on PyPI, using
@@ -15,7 +20,7 @@ class Alle < Formula
   include Language::Python::Virtualenv
 
   desc "Universal VPN client with rule-based routing (headless CLI + Web UI)"
-  homepage "https://github.com/zydo/alle"
+  homepage "https://github.com/anyhop/anyhop"
   url "https://files.pythonhosted.org/packages/0a/6f/dcde3d95ca5bd9432dcd320af142c8599bd601ca2f8b45fd58bfd72ae974/alle_proxy-0.1.17.tar.gz"
   sha256 "b1b6df07714af22af8ce3ff5e3240f46e925348bc4ee297b312181dee13c2add"
   license "MIT"
