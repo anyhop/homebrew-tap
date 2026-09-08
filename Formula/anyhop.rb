@@ -1,13 +1,8 @@
-# Homebrew formula for the headless `alle` channel (macOS + Linux).
-#
-# NOTE: the project moved to https://github.com/anyhop/anyhop and is being
-# renamed to `anyhop` (PyPI `anyhop`). Until anyhop 0.1.18 ships this formula
-# still installs `alle-proxy` 0.1.17 and the `alle` command; the release
-# workflow will replace it with Formula/anyhop.rb.
+# Homebrew formula for the headless `anyhop` channel (macOS + Linux).
 #
 # This is the canonical source of the formula. The `homebrew-tap` tap ships a
 # copy of it; the release workflow updates the tap's copy only after the
-# matching `alle-proxy` release exists on PyPI, using
+# matching `anyhop` release exists on PyPI, using
 # `scripts/update-homebrew-formula.py` to fill the `url`/`sha256` below with the
 # digest PyPI recorded for the published sdist. The resource pins are taken from
 # uv.lock (tests/test_homebrew_formula.py keeps them from drifting).
@@ -16,13 +11,13 @@
 # background daemon, loopback control API, and the version-locked bundled Web UI
 # — no GUI surface of any kind. The base wheel enforces that boundary for every
 # native distribution channel.
-class Alle < Formula
+class Anyhop < Formula
   include Language::Python::Virtualenv
 
   desc "Universal VPN client with rule-based routing (headless CLI + Web UI)"
   homepage "https://github.com/anyhop/anyhop"
-  url "https://files.pythonhosted.org/packages/0a/6f/dcde3d95ca5bd9432dcd320af142c8599bd601ca2f8b45fd58bfd72ae974/alle_proxy-0.1.17.tar.gz"
-  sha256 "b1b6df07714af22af8ce3ff5e3240f46e925348bc4ee297b312181dee13c2add"
+  url "https://files.pythonhosted.org/packages/b6/a4/1b43d0e792c2d05e939ff7f41ed9376abe92d01e4e5901fc0c470f8e7a31/anyhop-0.1.18.tar.gz"
+  sha256 "9f32a799e4a0c74257644df68f29d45ad2a2f1670cbe7be0d13b8c3671ed563a"
   license "MIT"
 
   depends_on "libyaml"
@@ -54,38 +49,38 @@ class Alle < Formula
   # Native Homebrew supervision for the per-user daemon. On macOS this becomes a
   # LaunchAgent, on Linux a `systemd --user` unit — both run for the login
   # session and respawn on crash / self-restart-on-upgrade. Manage it with
-  # `brew services`, not `alle daemon install` (see caveats).
+  # `brew services`, not `anyhop daemon install` (see caveats).
   service do
-    run [opt_bin/"alle", "applier"]
-    environment_variables ALLE_SERVICE:        "1",
-                          ALLE_SERVICE_OWNER:  "homebrew",
-                          ALLE_SERVICE_PREFIX: opt_prefix.to_s,
-                          PATH:                std_service_path_env
+    run [opt_bin/"anyhop", "applier"]
+    environment_variables ANYHOP_SERVICE:        "1",
+                          ANYHOP_SERVICE_OWNER:  "homebrew",
+                          ANYHOP_SERVICE_PREFIX: opt_prefix.to_s,
+                          PATH:                  std_service_path_env
     keep_alive true
-    log_path var/"log/alle.log"
-    error_log_path var/"log/alle.log"
+    log_path var/"log/anyhop.log"
+    error_log_path var/"log/anyhop.log"
   end
 
   def caveats
     <<~EOS
-      This is the headless alle channel: CLI, background daemon, loopback
+      This is the headless anyhop channel: CLI, background daemon, loopback
       control API, and the bundled Web UI.
 
       Manage the background daemon with brew services rather than
-      `alle daemon install` (which would register a competing launchd/systemd
+      `anyhop daemon install` (which would register a competing launchd/systemd
       unit for the same user):
 
-        brew services start alle      # start now and at login
-        brew services stop alle
+        brew services start anyhop      # start now and at login
+        brew services stop anyhop
 
-      State lives in ~/.alle. Open the Web UI with `alle ui`.
+      State lives in ~/.anyhop. Open the Web UI with `anyhop ui`.
     EOS
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/alle version")
+    assert_match version.to_s, shell_output("#{bin}/anyhop version")
 
-    site = Dir[libexec/"lib/python*/site-packages/alle"].first
+    site = Dir[libexec/"lib/python*/site-packages/anyhop"].first
 
     # The bundled Web UI is present and version-locked to the CLI package.
     assert_path_exists "#{site}/assets/index.html"
