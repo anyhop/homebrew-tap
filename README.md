@@ -43,5 +43,6 @@ PyPI, pins the new sdist by its PyPI-recorded SHA-256, and pushes the updated
 formula here. Manual edits to `Formula/` in this repo will be overwritten by the
 next release.
 
-> The `anyhop` formula replaces the earlier `alle` formula (the project was
-> renamed); the first `anyhop` release removes `Formula/alle.rb`.
+> This tap's formula was renamed from `alle` to `anyhop` when the project was
+> renamed (2026-09); the old `Formula/alle.rb` was removed in the first
+> `anyhop` release.
