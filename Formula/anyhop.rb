@@ -16,8 +16,8 @@ class Anyhop < Formula
 
   desc "Universal VPN client with rule-based routing (headless CLI + Web UI)"
   homepage "https://github.com/anyhop/anyhop"
-  url "https://files.pythonhosted.org/packages/a6/cd/48f7710ec0c52417ddb5ccc1e16baff354d1be937802d6f50ea38e8e9842/anyhop-0.1.19.tar.gz"
-  sha256 "50ad6ad47fa335d440eb65ba2acfea704a28eadb242306380ce916c0ded46cf1"
+  url "https://files.pythonhosted.org/packages/1f/4a/5960d01897f2536f425a0598faa56bd0f9a70c8b8f8122034afc9e903bb2/anyhop-0.1.20.tar.gz"
+  sha256 "568ceaf8fc813b6c69ef13adfd3a9e6c0772d27a6cdbdaa08a7bfd0673658034"
   license "MIT"
 
   depends_on "libyaml"
