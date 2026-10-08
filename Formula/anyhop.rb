@@ -7,6 +7,12 @@
 # digest PyPI recorded for the published sdist. The resource pins are taken from
 # uv.lock (tests/test_homebrew_formula.py keeps them from drifting).
 #
+# The `url`/`sha256` committed here are whatever release they were last filled
+# with (they lag on purpose: the rewrite lands only in the tap's copy, never
+# back in this repo). Install from the tap (`brew install anyhop/tap/anyhop`),
+# not from this file — a direct install from this checkout builds a stale
+# version.
+#
 # Product boundary: this channel is deliberately headless. It installs the CLI,
 # background daemon, loopback control API, and the version-locked bundled Web UI
 # — no GUI surface of any kind. The base wheel enforces that boundary for every
@@ -16,8 +22,8 @@ class Anyhop < Formula
 
   desc "Universal VPN client with rule-based routing (headless CLI + Web UI)"
   homepage "https://github.com/anyhop/anyhop"
-  url "https://files.pythonhosted.org/packages/1f/4a/5960d01897f2536f425a0598faa56bd0f9a70c8b8f8122034afc9e903bb2/anyhop-0.1.20.tar.gz"
-  sha256 "568ceaf8fc813b6c69ef13adfd3a9e6c0772d27a6cdbdaa08a7bfd0673658034"
+  url "https://files.pythonhosted.org/packages/de/57/27799dd92629e5c5cdf28e148dc36af72d4c384f9f916d1e51b4ba906adc/anyhop-0.1.21.tar.gz"
+  sha256 "35d3c33d9903e8832b5b785826f0e762a833954d81962bdd9fc772719279fd1f"
   license "MIT"
 
   depends_on "libyaml"
